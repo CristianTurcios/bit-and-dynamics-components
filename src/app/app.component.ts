@@ -21,7 +21,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.lazyComp = import('./test/test.component').then(({ TestComponent }) => TestComponent);
     this.productListComponent = import('@bit/bit.angular-tutorial.product-list').then(m => m.ɵa);
+    // another way to import dinner component, but also work the same way of we import in line 22
     this.dinnercomponent = import('./menu/dinner/dinner.component').then(m => m.DinnerComponent);
-    this.dinnercomponent1 = import('./menu/dinner/dinner.component').then(({ DinnerComponent }) => DinnerComponent);
   }
 }
