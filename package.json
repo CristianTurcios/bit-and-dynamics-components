@@ -11,6 +11,9 @@
     "@angular/platform-browser": "^9.0.6",
     "@angular/platform-browser-dynamic": "^9.0.6",
     "@angular/router": "^9.0.6",
+    "@bit/bit.angular-tutorial.product-list": "0.0.2",
+    "@bit/jonatan_allan.angular.pagination": "0.0.45",
+    "@bit/ricoarisandyw.angular.box-selector": "0.0.4",
     "angular-in-memory-web-api": "^0.10.0",
     "core-js": "3.6.4",
     "rxjs": "6.5.4",
@@ -58,5 +61,12 @@
     "@angular/platform-browser": "^9.0.0",
     "@angular/platform-browser-dynamic": "^9.0.0",
     "@angular/router": "^9.0.0"
+  },
+  "bit": {
+    "env": {
+      "compiler": "bit.envs/compilers/angular@9.0.14"
+    },
+    "componentsDefaultDirectory": "components/{name}",
+    "packageManager": "npm"
   }
 }
