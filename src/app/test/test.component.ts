@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 
 @Component({
   selector: 'app-test',
@@ -6,10 +6,14 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./test.component.css']
 })
 export class TestComponent implements OnInit {
-
+  @Input() hello: string;
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  getMessage(message): string {
+    return `${message} working well`;
   }
 
 }
