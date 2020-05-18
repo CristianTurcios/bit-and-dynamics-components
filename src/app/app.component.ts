@@ -13,10 +13,7 @@ export class AppComponent implements OnInit, AfterViewInit {
   dinnercomponent: Promise<any>;
   
   @ViewChild('componenteDinamico', { read: ViewContainerRef }) compDynamicContainer: ViewContainerRef;
-  @ViewChild('componenteDinamico1', { read: ViewContainerRef }) compDynamicContainer1: ViewContainerRef;
-
   componentRef: ComponentRef<any> = null;
-  componentRef1: ComponentRef<any> = null;
   
   constructor(
     private resolver: ComponentFactoryResolver,
@@ -25,25 +22,40 @@ export class AppComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
   }
 
-  async ngAfterViewInit() {
+  ngAfterViewInit() {
+    // Examples
+    this.simpleImport();
+    this.importComponentAndPassInputs();
+    this.importFromExternalSource();
+    this.importFromDifferentModule();
+  }
+
+  // 1. A simple import without passing any input or receiving any output
+  simpleImport() {
     this.lazyComp = import('./test/test.component').then(({ TestComponent }) => TestComponent);
-    this.lazyComp1 = import('./test/test.component').then(({ TestComponent }) =>  TestComponent);
+  }
 
-    this.componentRef = this.compDynamicContainer.createComponent(
-      this.resolver.resolveComponentFactory(await this.lazyComp1)
-    );
+  // 2.An import but passing inputs to the component
+  importComponentAndPassInputs() {
+    import('./test/test.component').then(({ TestComponent }) => {
+      this.componentRef = this.compDynamicContainer.createComponent(
+        this.resolver.resolveComponentFactory(TestComponent)
+      );
 
-    this.componentRef1 = this.compDynamicContainer1.createComponent(
-      this.resolver.resolveComponentFactory(await this.lazyComp1)
-    );
+      this.componentRef.instance.hello = 'hello';
+      const message = this.componentRef.instance.getMessage('calling a function inside dynamic component');
+      console.log('message', message);
+    });
+  }
 
-    this.componentRef.instance.hello = 'hello';
-    const message = this.componentRef.instance.getMessage('calling a function inside dynamic component');
-    console.log('message', message);
-    
-
+  // 3. Importing a component that does not exist in our code from bit.dev
+  importFromExternalSource() {
     this.productListComponent = import('@bit/bit.angular-tutorial.product-list').then(m => m.ɵa);
-    // another way to import dinner component, but also work the same way of we import in line 22
+  }
+
+  // 4. Importing a component from a different module to the app.module
+  // another way to import dinner component, but also work the same way of we import in line 30
+  importFromDifferentModule () {
     this.dinnercomponent = import('./menu/dinner/dinner.component').then(m => m.DinnerComponent);
   }
 }
