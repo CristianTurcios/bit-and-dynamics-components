@@ -1,5 +1,8 @@
-import { Component, OnInit, AfterViewInit, ComponentFactoryResolver, ViewChild, ViewContainerRef, ComponentRef } from '@angular/core';
-// import { PlaceHolderDirective } from './place-holder.directive';
+import { 
+  Component, OnInit, AfterViewInit, ComponentFactoryResolver, 
+  ViewChild, ViewContainerRef, ComponentRef, Injector
+} from '@angular/core';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -11,15 +14,18 @@ export class AppComponent implements OnInit, AfterViewInit {
   lazyComp1: Promise<any>;
   productListComponent: Promise<any>;
   dinnercomponent: Promise<any>;
-  
-  @ViewChild('componenteDinamico', { read: ViewContainerRef }) compDynamicContainer: ViewContainerRef;
+  myInjector: Injector;
+  @ViewChild('dynamicComponent', { read: ViewContainerRef }) compDynamicContainer: ViewContainerRef;
   componentRef: ComponentRef<any> = null;
+  inputs: any;
+  outputs: any;
   
   constructor(
     private resolver: ComponentFactoryResolver,
   ) { }
 
   ngOnInit(): void {
+    this.anotherWayimportComponentAndPassInputs();
   }
 
   ngAfterViewInit() {
@@ -48,12 +54,25 @@ export class AppComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // 3. Importing a component that does not exist in our code from bit.dev
+  // 3.An import but passing inputs to the component
+  //  external library to create dynamics components: https://github.com/gund/ng-dynamic-component
+  anotherWayimportComponentAndPassInputs() {
+    this.lazyComp1 = import('./test/test.component').then(({ TestComponent }) => TestComponent);
+    this.inputs = {
+      hello: 'hello dear friends',
+      isBoolean: true
+    };
+    this.outputs = {
+      onSomething: type => alert(type),
+    };
+  }
+
+  // 4. Importing a component that does not exist in our code from bit.dev
   importFromExternalSource() {
     this.productListComponent = import('@bit/bit.angular-tutorial.product-list').then(m => m.ɵa);
   }
 
-  // 4. Importing a component from a different module to the app.module
+  // 5. Importing a component from a different module to the app.module
   // another way to import dinner component, but also work the same way of we import in line 30
   importFromDifferentModule () {
     this.dinnercomponent = import('./menu/dinner/dinner.component').then(m => m.DinnerComponent);

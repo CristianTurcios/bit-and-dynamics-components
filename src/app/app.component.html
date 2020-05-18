@@ -1,5 +1,6 @@
 <app-top-bar></app-top-bar>
-<ng-template [ngComponentOutlet]="lazyComp | async"></ng-template>
-<ng-template [ngComponentOutlet]="productListComponent | async"></ng-template>
-<ng-template [ngComponentOutlet]="dinnercomponent | async"></ng-template>
-<ng-container #componenteDinamico></ng-container>
+<ng-container [ngComponentOutlet]="lazyComp | async"></ng-container>
+<ng-container [ngComponentOutlet]="lazyComp1 | async" [ndcDynamicInputs]="inputs" [ndcDynamicOutputs]="outputs"></ng-container>
+<ng-container [ngComponentOutlet]="productListComponent | async"></ng-container>
+<ng-container [ngComponentOutlet]="dinnercomponent | async"></ng-container>
+<ng-container #dynamicComponent></ng-container>

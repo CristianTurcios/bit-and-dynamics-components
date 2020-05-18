@@ -3,17 +3,17 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
-import { PlaceHolderDirective } from './place-holder.directive';
+import { DynamicComponentModule } from 'ng-dynamic-component';
 
 @NgModule({
   imports: [
     BrowserModule,
     ReactiveFormsModule,
+    DynamicComponentModule,
   ],
   declarations: [
     AppComponent,
     TopBarComponent,
-    PlaceHolderDirective,
   ],
   bootstrap: [AppComponent]
 })
